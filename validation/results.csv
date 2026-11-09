@@ -1,0 +1,17 @@
+group,case,bounds,tool_area,ref_area,pct_diff_tool_vs_ref,analytic_truth,tool_err_pct_vs_truth,notes
+synthetic,"flat_gauss_1(A=8000,s=4,fixed_width)","[88,112)",103999.36,103999.36,0.0000,79864.81,30.22,"method=fixed_width,base=minimum"
+synthetic,"flat_gauss_2(A=8000,s=8,fixed_width)","[81,121)",153677.17,153677.17,0.0000,158020.39,-2.75,"method=fixed_width,base=minimum"
+synthetic,"flat_gauss_3(A=3000,s=6,percent_height,bright)","[92,108)",36132.34,36132.34,0.0000,35514.14,1.74,"method=percent_height,base=minimum"
+synthetic,"flat_gauss_4(A=12000,s=10,percent_height)","[100,100)",0.00,0.00,0.0000,,,"method=percent_height,base=minimum DEGENERATE: dark-band corrected is negative at the peak, so the % -height walk runs to the profile edges"
+synthetic,sloped_bg_gauss,"[20,180)",196460.66,196460.66,0.0000,105278.39,86.61,"method=fixed_width,base=manual sloped bg, flank-median baseline"
+synthetic,smeared_two_gauss(dominant),"[76,104)",105080.26,104962.90,0.1118,102652.17,2.37,bounds truncated at valley
+synthetic,bright_polarity_gauss,"[82,118)",136289.55,136289.55,0.0000,134863.44,1.06,bands_are_bright path
+real,img884_lane0_w143px,"[35,186)",637.19,637.19,0.0000,,,"peak=128 baseline_region=(15, 30)"
+real,img884_lane2_w108px,"[30,186)",1555.36,1555.36,0.0000,,,"peak=123 baseline_region=(10, 25)"
+real,img884_lane3_w97px,"[29,186)",907.87,907.87,0.0000,,,"peak=119 baseline_region=(9, 24)"
+real,img884_lane5_w84px,"[28,186)",1315.56,1315.56,0.0000,,,"peak=111 baseline_region=(8, 23)"
+real,img884_lane7_w35px,"[79,147)",1447.29,1447.29,0.0000,,,"peak=113 baseline_region=(59, 74)"
+real,img884_lane11_w37px,"[77,149)",943.95,943.95,0.0000,,,"peak=113 baseline_region=(57, 72)"
+real,img0001876_lane0,"[128,132)",232.35,232.35,0.0000,,,"peak=130 baseline_region=(108, 123)"
+real,img0001876_lane2,"[128,132)",227.99,227.99,0.0000,,,"peak=130 baseline_region=(108, 123)"
+real,img0001876_lane3,"[128,132)",223.69,223.69,0.0000,,,"peak=130 baseline_region=(108, 123)"

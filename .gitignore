@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# OS / editors
+.DS_Store
+._*
+.vscode/
+.idea/
+.specstory/
+
+# Build artifacts
+build/
+dist/
+*.spec
+
+# Data (raw blots live outside git — see ARCHIVAL_MANIFEST.sha256)
+raw_image_studio/
+images/
+*.tif
+*.TIF
+!example_data/*.tif
+
+# Outputs (ad-hoc exports; docs/figures is the tracked exception)
+*.png
+*.pdf
+!docs/figures/*.png
+!docs/figures/*.pdf

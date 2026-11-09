@@ -1,0 +1,82 @@
+\chapter{Western Blot Quantification Decision Framework and Validation}
+\label{app:wb-quant-framework}
+
+This appendix documents the densitometry workflow used for Western blot quantification, with emphasis on decision rules for non-ideal bands and reproducibility safeguards.
+
+\section{Rationale}
+
+Standard Western blot quantification workflows were found to be either highly manual and difficult to standardize (e.g., generic manual lane integration), or highly automated but insufficiently configurable for heterogeneous band/background morphologies. Reported densitometry practices are additionally inconsistent across the literature: in one survey of 100 randomly selected papers, none documented how blot signal was converted to quantitative values, and different common densitometry procedures applied to the same blot yielded markedly different outcomes \cite{gassmann2009densitometry,butler2019misleading,kroon2022blindspots}. % NOTE: bib keys are placeholders — Gassmann 2009 Electrophoresis; Butler 2019 Biomed Res Int; Kroon 2022 PLoS Biol. A custom-assisted workflow was therefore used to provide controlled flexibility while preserving traceability of analysis choices.
+
+\section{Core Workflow}
+
+For each lane, quantification proceeded through the following steps:
+\begin{enumerate}
+    \item Define lane ROI and extract 1D intensity profile.
+    \item Select baseline strategy according to profile quality.
+    \item Select integration strategy according to peak morphology.
+    \item Compute area and export the quantification record together with a parameter record (bounds, baseline mode, integration method, and fit mode where applicable).
+\end{enumerate}
+
+\section{Decision Rules}
+
+\textbf{Case A: Clean peak with low/consistent background.}
+\begin{itemize}
+    \item Preferred method: direct integration of the selected peak region above local baseline.
+    \item Baseline options: background-box median subtraction or manual flat baseline region.
+\end{itemize}
+
+\textbf{Case B: Spatially variable background across blot.}
+\begin{itemize}
+    \item Preferred method: lane-local or region-local baseline selection (rather than global baseline).
+    \item Rationale: reduce bias introduced by non-uniform membrane background.
+\end{itemize}
+
+\textbf{Case C: Partial band smearing / asymmetric tailing.}
+\begin{itemize}
+    \item Initial method: conservative user-defined integration bounds (no extrapolation).
+    \item Optional method: constrained single-peak Gaussian reconstruction fitted within an analyst-selected interval chosen by inspection to exclude the most distorted portion of the profile.
+    \item Use condition: only where one side of the peak is visibly intact and the fitted curve is visually and numerically plausible.
+\end{itemize}
+
+\section{Gaussian-Assisted Quantification (Optional)}
+
+Gaussian-assisted quantification was treated as an estimated reconstruction method, not a default. The fit is a single Gaussian constrained to the user-specified interval; two areas are reported --- the fitted-model area over the selected interval and the extrapolated full-Gaussian area ($\mathrm{amp}\times\sigma\times\sqrt{2\pi}$) --- the latter used only as an estimate of band mass falling outside conservative bounds. The selected fit range and fitted parameters were retained in the analysis record (embedded in export files from software version~1.0.0), and downstream conclusions were checked against non-reconstructed quantification to confirm that key findings were not dependent on fit-based recovery alone.
+
+\section{Reproducibility and Audit Trail}
+
+To limit analyst degrees of freedom, each quantification retained:
+\begin{itemize}
+    \item lane and band boundaries,
+    \item baseline method and baseline regions,
+    \item integration method,
+    \item fit method and parameters (if applicable),
+    \item raw and corrected area values.
+\end{itemize}
+
+For the analyses reported here, this record was preserved through a systematic export file-naming convention encoding the integration mode, baseline/noise-handling variant and whether Gaussian fitting was applied (e.g.\ \texttt{...\_whole\_region\_minus\_background\_noise\_no\_fitting.csv}), together with saved lane-geometry and background-region sidecar files for each source image. Interactively selected baseline regions are implicit in the corrected values; from software version~1.0.0 all of the above are additionally embedded directly in each export as method columns and header comments, alongside the tool version, code commit, lane geometry and a checksum of the source image. These records support re-analysis from the raw TIFF files with method provenance.
+
+\section{Sensitivity/Robustness Checks}
+
+The following checks were used to ensure defensible quantification:
+\begin{enumerate}
+    \item Re-quantification of representative bands under alternative baseline methods.
+    \item Re-quantification of representative smeared bands with and without Gaussian-assisted reconstruction.
+    \item Confirmation that principal treatment-effect direction and statistical conclusions were stable to reasonable method variation.
+\end{enumerate}
+
+\section{Tool Verification}
+
+The numerical core of the quantification tool was verified against an automated test suite covering profile extraction, all baseline-subtraction modes, integration bounds, the constrained Gaussian fit and the export schema (44 tests), and against an independent minimal reference implementation (row-wise mean profile, background-median baseline, trapezoidal integration), with mean relative agreement better than 0.01\% across synthetic and real profiles. Automatic peak detection retains the single dominant band per lane; lanes requiring multi-band or smeared-band treatment were therefore quantified through the interactive path.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Cell_Work/figs/densitometry_worked_example.pdf}
+    % Source figure: WB_quantifier repo, docs/figures/worked_example.pdf (copy into thesis figs dir)
+    \titledcaption{Worked example of the densitometry decision rules}{Lane intensity profiles from a representative blot, generated by the quantification tool. (a)~Case~A: a clean, symmetric band quantified by direct integration between its 20\%-height crossings above a flat baseline taken as the median of a user-selected clean flank. (b)~Case~C: a broad, upward-smeared band quantified with conservative user-defined bounds symmetric about the peak, excluding the smear tail. (c)~The same band with optional constrained single-peak Gaussian reconstruction fitted on the analyst-selected interval; the conservative bounds in (b) visibly omit part of the band mass recovered by the fitted curve (bounded area 738 vs.\ full-Gaussian estimate 977 a.u.). Shaded regions indicate integration bounds; horizontal dashed lines indicate the baseline level.}
+    \label{fig:app-densitometry}
+\end{figure}
+
+\section{Software Availability (Optional Statement)}
+
+The quantification workflow was implemented in a custom open-source Python tool (GUI-based) developed during this project (\texttt{WB\_quantifier}, version~1.0.0, MIT license), publicly archived at \url{https://github.com/camKD98/WB_quantifier} with a commit-stamped citation record (\texttt{CITATION.cff}).
+% NOTE: URL resolves only once the repository is public; pin the cited tag/commit at release (v1.0.0).

@@ -1,0 +1,91 @@
+{
+  "lanes": [
+    [
+      60,
+      90,
+      80,
+      220
+    ],
+    [
+      202,
+      90,
+      80,
+      220
+    ],
+    [
+      345,
+      90,
+      80,
+      220
+    ],
+    [
+      488,
+      90,
+      80,
+      220
+    ],
+    [
+      631,
+      90,
+      80,
+      220
+    ],
+    [
+      774,
+      90,
+      80,
+      220
+    ],
+    [
+      917,
+      90,
+      80,
+      220
+    ],
+    [
+      1060,
+      90,
+      80,
+      220
+    ]
+  ],
+  "lane_size": [
+    80,
+    220
+  ],
+  "reference_band_width": 40,
+  "background_boxes": [
+    [
+      30,
+      20,
+      120,
+      50
+    ],
+    [
+      1050,
+      20,
+      120,
+      50
+    ]
+  ],
+  "background_lane_map": [
+    null,
+    null
+  ],
+  "image_path": "example_data/synthetic_blot.tif",
+  "image_size": [
+    1200,
+    400
+  ],
+  "image_page": 0,
+  "baseline_method": "minimum",
+  "integration_method": "percent_height",
+  "bands_are_bright": true,
+  "invert_for_analysis": false,
+  "peak_threshold": 0.1,
+  "display_params": {
+    "p_low": 0.5,
+    "p_high": 99.5,
+    "gamma": 1.0
+  }
+}

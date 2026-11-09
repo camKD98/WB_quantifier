@@ -1,0 +1,31 @@
+Worked example — lane-intensity quantification
+================================================
+
+Source: images/Image_0001884_01.tif (3062x2590 LI-COR scan, uint8 RGB; channel 0
+used). Lane ROIs from images/Image_0001875_01.json (12 lanes, 108x186 px each).
+Profiles are row-wise means via quant_core.extract_profile; bands are dark on a
+bright background, so the plotted "intensity" is the negated signal (peaks = bands).
+
+Lane selection (see docs/figures/_contact_sheet.png):
+- Panel (a) CLEAN — lane index 7: narrowest, most symmetric band
+  (width at 20% peak height = 35 px, left/right asymmetry = 7 px).
+- Panel (b,c) SMEARED — lane index 3: broadest, most-tailed band
+  (width at 20% height = 79 px, asymmetry = 55 px; pronounced upward smear).
+
+Baseline (both lanes): flat manual-region baseline = median of profile rows
+150-180 (quant_core.median_region_value), a clean flank below the band; value
+-225 (raw ~225 counts) for both lanes.
+
+Panel (a): trapezoid integration bounds = rows where the corrected profile
+crosses 20% of peak height -> rows 92-127, area = 1383.0 a.u.
+
+Panel (b): conservative "user-style" bounds on the smeared lane — the right
+bound is the 20%-height crossing on the clean descending side (row 133); the
+left bound is its mirror image about the peak (2*119-133 = row 105), which
+excludes the upward smear tail. Bounded area = 738.4 a.u.
+
+Panel (c): quant_core.fit_single_peak_gaussian on the baseline-corrected
+profile over rows 105-133 of lane 3. Fit: amp = 34.42, mu = 116.23, sigma =
+11.32 px (polarity +1). Areas: selected-region model area = 739.7 a.u.,
+full-Gaussian area (amp*sigma*sqrt(2pi)) = 976.7 a.u. — the gap quantifies the
+band mass falling outside conservative user bounds.

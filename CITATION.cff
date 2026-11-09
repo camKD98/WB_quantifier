@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "WB_quantifier: interactive Western blot densitometry tool"
+version: 1.0.0
+date-released: 2026-11-09
+type: software
+license: MIT
+authors:
+  - family-names: "Kemble-Diaz"
+    given-names: "Cambrin"
+    orcid: "https://orcid.org/0009-0008-2389-0639"
+repository-code: "https://github.com/camKD98/WB_quantifier"
+abstract: "Interactive Tkinter/Matplotlib GUI for per-lane ROI densitometry of Western blot images: 1-D intensity profiles, local background-median baselines, trapezoidal integration with user-defined or automatic bounds, and optional constrained single-peak Gaussian reconstruction. Developed for quantification of HUVEC pFAK(Tyr397)/total-FAK/actin blots."
+keywords: [western blot, densitometry, gel analysis, reproducibility, Tkinter]
